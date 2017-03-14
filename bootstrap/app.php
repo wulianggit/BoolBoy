@@ -52,4 +52,15 @@ $app->singleton(
 |
 */
 
+$app->configureMonologUsing(function ($monolog) use ($app) {
+    $monolog->pushHandler(
+        (new Monolog\Handler\RotatingFileHandler(
+            $app['config']['log.default.path'],
+            7,
+            Monolog\Logger :: toMonologLevel($app['config']['log.default.level'])
+        ))->setFormatter(new Monolog\Formatter\LineFormatter(null, null, true, true))
+    );
+    return $monolog;
+});
+
 return $app;

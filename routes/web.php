@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+// 后台路由设置
+Route::group(['namespace' => 'Admin', 'prefix' => 'backend', 'middleware' => 'auth'], function () {
+    // 首页
+    Route::get('/', 'HomeController@index');
+});
+
+
